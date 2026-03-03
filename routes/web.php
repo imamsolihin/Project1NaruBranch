@@ -1,0 +1,42 @@
+<?php
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProjectController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Select Division Routes (Protected by auth and role:user, but NOT has.division)
+Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
+    Route::get('/select-division', [\App\Http\Controllers\User\DivisionSelectionController::class, 'create'])->name('division.select');
+    Route::post('/select-division', [\App\Http\Controllers\User\DivisionSelectionController::class, 'store'])->name('division.store');
+});
+
+// Dashboard Route (Protected by has.division)
+Route::get('/dashboard', [\App\Http\Controllers\User\ProjectController::class, 'index'])
+    ->middleware(['auth', 'verified', 'role:user', 'has.division'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    // profile
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// 🔥 ADMIN AREA
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::resource('divisions', \App\Http\Controllers\Admin\DivisionController::class);
+    // Monitor all projects
+    Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('projects.index');
+});
+
+// 🧑‍💻 USER AREA
+Route::middleware(['auth', 'role:user', 'has.division'])->group(function () {
+    Route::resource('projects', \App\Http\Controllers\User\ProjectController::class);
+});
+
+require __DIR__.'/auth.php';
