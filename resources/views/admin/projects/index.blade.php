@@ -6,8 +6,8 @@
                 <p class="text-gray-600 dark:text-gray-400 mt-2">Daftar semua project dari seluruh divisi</p>
             </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
-                <table class="w-full">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-x-auto border border-gray-100 dark:border-gray-700">
+                <table class="w-full min-w-[800px]">
                     <thead class="bg-gray-50 dark:bg-gray-700/50">
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Project</th>

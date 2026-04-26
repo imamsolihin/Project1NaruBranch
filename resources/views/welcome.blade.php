@@ -50,7 +50,7 @@
                     @if (Route::has('login'))
                         @auth
                             <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
-                                Ke Dashboard &rarr;
+                                Dashboard <span class="hidden sm:inline">&rarr;</span>
                             </a>
                         @else
                             <a href="{{ route('login') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -58,8 +58,8 @@
                             </a>
 
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-5 py-2.5 rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 transform">
-                                    Daftar Sekarang
+                                <a href="{{ route('register') }}" class="text-xs sm:text-sm font-medium bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-2 sm:px-5 sm:py-2.5 rounded-full hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5 transform">
+                                    Daftar <span class="hidden sm:inline">Sekarang</span>
                                 </a>
                             @endif
                         @endauth
@@ -87,7 +87,7 @@
                 Sistem Manajemen Project Versi 2.0
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8">
                 Kelola Divisi & Project<br />
                 <span class="bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 text-transparent bg-clip-text">Lebih Terstruktur</span>
             </h1>

@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-8 flex justify-between items-center">
+            <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Manajemen Divisi</h1>
                     <p class="text-gray-600 dark:text-gray-400 mt-2">Daftar semua divisi di perusahaan</p>
@@ -17,8 +17,8 @@
                 </div>
             @endif
 
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
-                <table class="w-full">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-x-auto border border-gray-100 dark:border-gray-700">
+                <table class="w-full min-w-[600px]">
                     <thead class="bg-gray-50 dark:bg-gray-700/50">
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">ID</th>

@@ -30,29 +30,30 @@
         <div class="bg-white p-6 rounded-2xl shadow">
             <h3 class="text-lg font-semibold mb-4">Daftar Project</h3>
 
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b">
-                        <th class="py-2">Nama Project</th>
-                        <th class="py-2">Divisi</th>
-                        <th class="py-2">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b">
-                        <td class="py-2">Website Company Profile</td>
-                        <td class="py-2">IT</td>
-                        <td class="py-2 text-yellow-500">Ongoing</td>
-                    </tr>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-2">Nama Project</th>
+                            <th class="py-2">Divisi</th>
+                            <th class="py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="py-2">Website Company Profile</td>
+                            <td class="py-2">IT</td>
+                            <td class="py-2 text-yellow-500">Ongoing</td>
+                        </tr>
 
-                    <tr class="border-b">
-                        <td class="py-2">Desain Banner</td>
-                        <td class="py-2">Desainer</td>
-                        <td class="py-2 text-green-500">Selesai</td>
-                    </tr>
-                </tbody>
-            </table>
-
+                        <tr class="border-b">
+                            <td class="py-2">Desain Banner</td>
+                            <td class="py-2">Desainer</td>
+                            <td class="py-2 text-green-500">Selesai</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-app-layout>
