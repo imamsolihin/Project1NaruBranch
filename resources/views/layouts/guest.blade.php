@@ -21,9 +21,21 @@
                 66% { transform: translate(-20px, 20px) scale(0.9); }
                 100% { transform: translate(0px, 0px) scale(1); }
             }
+            @keyframes slideUpFade {
+                0% { opacity: 0; transform: translateY(30px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
             .animate-blob { animation: blob 7s infinite; }
             .animation-delay-2000 { animation-delay: 2s; }
             .animation-delay-4000 { animation-delay: 4s; }
+            .animate-slide-up {
+                animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+                opacity: 0;
+            }
+            .delay-100 { animation-delay: 100ms; }
+            .delay-200 { animation-delay: 200ms; }
+            .delay-300 { animation-delay: 300ms; }
+            .delay-400 { animation-delay: 400ms; }
         </style>
         <!-- Dark Mode Initialization -->
         <script>
@@ -44,9 +56,9 @@
         </div>
 
         <!-- Auth Card Container -->
-        <div class="relative z-10 w-full sm:max-w-md px-6 py-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl overflow-hidden sm:rounded-3xl border border-white/50 dark:border-gray-700/50 m-4 transition-colors duration-300">
+        <div class="relative z-10 w-full sm:max-w-md px-6 py-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl shadow-2xl overflow-hidden sm:rounded-3xl border border-white/50 dark:border-gray-700/50 m-4 transition-colors duration-300 animate-slide-up">
             
-            <div class="flex justify-center mb-8">
+            <div class="flex justify-center mb-8 animate-slide-up delay-100">
                 <a href="/" class="flex items-center gap-3 group">
                     <div class="w-14 h-14 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
                         N
@@ -55,12 +67,14 @@
                 </a>
             </div>
 
-            <div class="mb-6 text-center">
+            <div class="mb-6 text-center animate-slide-up delay-200">
                 <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400 text-transparent bg-clip-text">Selamat Datang di NaruBranch</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Silakan masuk ke akun Anda</p>
             </div>
 
-            {{ $slot }}
+            <div class="animate-slide-up delay-300">
+                {{ $slot }}
+            </div>
         </div>
     </body>
 </html>
