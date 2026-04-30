@@ -12,6 +12,13 @@
         <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            @keyframes slideUpFade {
+                0% { opacity: 0; transform: translateY(30px); }
+                100% { opacity: 1; transform: translateY(0); }
+            }
             /* Abstract Floating Shapes */
             .bg-abstract {
                 background: linear-gradient(135deg, #1e1b4b, #312e81);
