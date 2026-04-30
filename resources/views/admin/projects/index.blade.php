@@ -47,9 +47,11 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                         </tr>
+                        @empty
                         <tr>
                             <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada project yang dikerjakan.</td>
                         </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
