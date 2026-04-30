@@ -26,7 +26,8 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'division_id' => 'required'
+            'division_id' => 'required',
+            'deadline' => 'nullable|date'
         ]);
 
         Project::create($request->all());

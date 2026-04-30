@@ -22,6 +22,9 @@
                         <x-nav-link :href="route('admin.divisions.index')" :active="request()->routeIs('admin.divisions.*')">
                             {{ __('Kelola Divisi') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Kelola User') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.projects.index')" :active="request()->routeIs('admin.projects.*')">
                             {{ __('Monitor Project') }}
                         </x-nav-link>
@@ -101,6 +104,9 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.divisions.index')" :active="request()->routeIs('admin.divisions.*')">
                     {{ __('Kelola Divisi') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Kelola User') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.projects.index')" :active="request()->routeIs('admin.projects.*')">
                     {{ __('Monitor Project') }}

@@ -10,7 +10,8 @@ class Project extends Model
         'title',
         'description',
         'status',
-        'division_id'
+        'division_id',
+        'deadline'
     ];
 
     // relasi ke division

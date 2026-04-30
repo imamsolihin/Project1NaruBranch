@@ -11,8 +11,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $projects = Project::where('division_id', $user->division_id)->latest()->paginate(10);
+        $projects = Project::with('division')->latest()->paginate(10);
         return view('user.projects.index', compact('projects'));
     }
 
@@ -25,7 +24,8 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'deadline' => 'nullable|date'
         ]);
 
         $user = Auth::user();
@@ -34,6 +34,7 @@ class ProjectController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'division_id' => $user->division_id,
+            'deadline' => $request->deadline,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Project created successfully');
@@ -59,10 +60,11 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'status' => 'required|in:pending,ongoing,done'
+            'status' => 'required|in:pending,ongoing,done',
+            'deadline' => 'nullable|date'
         ]);
 
-        $project->update($request->only(['title', 'description', 'status']));
+        $project->update($request->only(['title', 'description', 'status', 'deadline']));
 
         return redirect()->route('dashboard')->with('success', 'Project updated successfully');
     }

@@ -19,6 +19,11 @@
             </div>
 
             <div class="mb-4">
+                <label class="block text-gray-700">Deadline</label>
+                <input type="date" name="deadline" class="w-full border rounded px-3 py-2 mt-1">
+            </div>
+
+            <div class="mb-4">
                 <label class="block text-gray-700">Divisi</label>
                 <select name="division_id" class="w-full border rounded px-3 py-2 mt-1">
                     @foreach($divisions as $division)

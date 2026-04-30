@@ -5,9 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/login');
 
 // Select Division Routes (Protected by auth and role:user, but NOT has.division)
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
@@ -30,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('divisions', \App\Http\Controllers\Admin\DivisionController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     // Monitor all projects
     Route::get('/projects', [\App\Http\Controllers\Admin\ProjectController::class, 'index'])->name('projects.index');
 });
