@@ -11,12 +11,19 @@ class Project extends Model
         'description',
         'status',
         'division_id',
-        'deadline'
+        'deadline',
+        'user_id'
     ];
 
     // relasi ke division
     public function division()
     {
         return $this->belongsTo(Division::class);
+    }
+
+    // relasi ke user (pembuat)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

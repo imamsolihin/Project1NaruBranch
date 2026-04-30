@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('division')->latest()->paginate(10);
+        $projects = Project::with(['division', 'user'])->latest()->paginate(10);
         return view('user.projects.index', compact('projects'));
     }
 
@@ -35,6 +35,7 @@ class ProjectController extends Controller
             'description' => $request->description,
             'division_id' => $user->division_id,
             'deadline' => $request->deadline,
+            'user_id' => $user->id,
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Project created successfully');

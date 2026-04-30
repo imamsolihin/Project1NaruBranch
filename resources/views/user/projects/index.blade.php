@@ -30,6 +30,7 @@
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Deadline</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Divisi</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Pembuat</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Dibuat</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -37,7 +38,10 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @forelse($projects as $project)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $project->title }}</td>
+                            <td class="px-6 py-4">
+                                <p class="font-medium text-gray-900 dark:text-white">{{ $project->title }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ Str::limit($project->description, 60) ?: '-' }}</p>
+                            </td>
                             <td class="px-6 py-4 text-sm {{ $project->deadline && \Carbon\Carbon::parse($project->deadline)->isPast() && $project->status !== 'done' ? 'text-red-500 font-bold' : 'text-gray-500 dark:text-gray-400' }}">
                                 {{ $project->deadline ? \Carbon\Carbon::parse($project->deadline)->format('d M Y') : '-' }}
                             </td>
@@ -51,6 +55,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 font-medium">{{ $project->division->name ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $project->user->name ?? 'Admin/Sistem' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">
                                 @if($project->division_id == Auth::user()->division_id)
@@ -68,9 +73,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">Belum ada project di divisi Anda.</td>
-                        </tr>
+                            <td colspan="7" class="px-6 py-12 text-center text-gray-500 dark:text-gray-400">Belum ada project di divisi Anda.</td>
                         @endforelse
                     </tbody>
                 </table>

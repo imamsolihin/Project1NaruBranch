@@ -12,6 +12,7 @@
                         <tr>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Project</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Divisi</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Pembuat</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Deadline</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Status</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase">Tgl Dibuat</th>
@@ -29,6 +30,9 @@
                                     {{ $project->division->name ?? 'Tanpa Divisi' }}
                                 </span>
                             </td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                                {{ $project->user->name ?? 'Admin/Sistem' }}
+                            </td>
                             <td class="px-6 py-4 text-sm {{ $project->deadline && \Carbon\Carbon::parse($project->deadline)->isPast() && $project->status !== 'done' ? 'text-red-500 font-bold' : 'text-gray-500 dark:text-gray-400' }}">
                                 {{ $project->deadline ? \Carbon\Carbon::parse($project->deadline)->format('d M Y') : '-' }}
                             </td>
@@ -43,9 +47,9 @@
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                         </tr>
-                        @empty
-                            <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada project yang dikerjakan.</td>
-                        @endforelse
+                        <tr>
+                            <td colspan="6" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">Belum ada project yang dikerjakan.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

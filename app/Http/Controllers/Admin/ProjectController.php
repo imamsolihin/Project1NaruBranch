@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('division')->latest()->get();
+        $projects = Project::with(['division', 'user'])->latest()->get();
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -30,7 +30,9 @@ class ProjectController extends Controller
             'deadline' => 'nullable|date'
         ]);
 
-        Project::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = auth()->id();
+        Project::create($data);
 
         return redirect('/admin')->with('success', 'Project berhasil ditambahkan');
     }
