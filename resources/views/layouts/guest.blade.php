@@ -15,19 +15,25 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <style>
-            @keyframes blob {
-                0% { transform: translate(0px, 0px) scale(1); }
-                33% { transform: translate(30px, -50px) scale(1.1); }
-                66% { transform: translate(-20px, 20px) scale(0.9); }
-                100% { transform: translate(0px, 0px) scale(1); }
+            @keyframes gradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
             }
             @keyframes slideUpFade {
                 0% { opacity: 0; transform: translateY(30px); }
                 100% { opacity: 1; transform: translateY(0); }
             }
-            .animate-blob { animation: blob 7s infinite; }
-            .animation-delay-2000 { animation-delay: 2s; }
-            .animation-delay-4000 { animation-delay: 4s; }
+            .animate-gradient {
+                background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+            .dark .animate-gradient {
+                background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #172554);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
             .animate-slide-up {
                 animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
                 opacity: 0;
@@ -46,13 +52,10 @@
             }
         </script>
     </head>
-    <body class="font-['Inter'] antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 selection:bg-purple-500 selection:text-white relative overflow-hidden min-h-screen flex items-center justify-center transition-colors duration-300">
+    <body class="font-['Inter'] antialiased text-gray-900 dark:text-gray-100 selection:bg-purple-500 selection:text-white relative overflow-hidden min-h-screen flex items-center justify-center transition-colors duration-300 animate-gradient">
 
-        <!-- Abstract Background Shapes -->
-        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-40 dark:opacity-20 transition-opacity duration-300">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
-            <div class="absolute top-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-32 left-1/2 -ml-48 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+        <!-- Abstract Background Particles (Optional overlay) -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-50">
         </div>
 
         <!-- Auth Card Container -->
