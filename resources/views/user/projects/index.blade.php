@@ -58,7 +58,7 @@
                             <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $project->user->name ?? 'Admin/Sistem' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">
-                                @if($project->division_id == Auth::user()->division_id)
+                                @if($project->user_id === Auth::id())
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('projects.edit', $project->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">Edit</a>
                                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Hapus project ini?');" class="inline">
