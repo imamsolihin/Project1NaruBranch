@@ -77,9 +77,13 @@
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                                     @php
                                         $nextSort = request('sort') === 'asc' ? 'desc' : 'asc';
+                                        $sortIcon = request('sort') === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7';
                                     @endphp
-                                    <a href="{{ route('admin.dashboard', ['sort' => $nextSort]) }}" title="Urutkan" class="inline-flex items-center hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
+                                    <a href="{{ route('admin.dashboard', ['sort' => $nextSort]) }}" title="Urutkan" class="inline-flex items-center hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer group">
                                         DIBUAT
+                                        <svg class="w-4 h-4 ml-1 text-gray-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $sortIcon }}"/>
+                                        </svg>
                                     </a>
                                 </th>
                             </tr>
