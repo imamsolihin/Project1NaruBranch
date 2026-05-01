@@ -21,7 +21,9 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @forelse($histories as $history)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $history->actor->name ?? 'Sistem' }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                {{ $history->actor ? ucwords(str_replace('_', ' ', $history->actor->role)) . ' - ' . $history->actor->name : 'Sistem' }}
+                            </td>
                             <td class="px-6 py-4">
                                 @if($history->action === 'Tambah')
                                     <span class="px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full text-xs font-medium">Tambah</span>
@@ -45,7 +47,7 @@
                     </tbody>
                 </table>
                 <div class="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-                    {{ $histories->links('pagination::tailwind') }}
+                    {{ $histories->links() }}
                 </div>
             </div>
         </div>
