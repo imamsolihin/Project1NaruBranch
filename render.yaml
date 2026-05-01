@@ -34,7 +34,7 @@ services:
       - key: MAIL_ENCRYPTION
         value: smtps
       - key: MAIL_FROM_ADDRESS
-        value: imamuntungsolihin@gmail.com
+        value: official@narubranchtech.id
       - key: MAIL_FROM_NAME
         value: NaruBranch
 
