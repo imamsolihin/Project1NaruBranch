@@ -24,15 +24,15 @@ services:
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST
-        value: smtp.gmail.com
+        value: smtp.hostinger.com
       - key: MAIL_PORT
         value: 465
       - key: MAIL_USERNAME
-        value: imamuntungsolihin@gmail.com
+        value: official@narubranchtech.id
       - key: MAIL_PASSWORD
-        value: wevhkwhmhsdxdzzk
+        value: N@ru2026
       - key: MAIL_ENCRYPTION
-        value: smtps
+        value: ssl
       - key: MAIL_FROM_ADDRESS
         value: official@narubranchtech.id
       - key: MAIL_FROM_NAME
