@@ -45,12 +45,30 @@ class ProjectController extends Controller
         $data['user_id'] = auth()->id();
         $project = Project::create($data);
 
+        $roleMap = [
+            'super_admin' => 'Super Admin',
+            'wakil_admin' => 'Wakil Admin',
+            'admin' => 'Admin'
+        ];
+        $roleName = $roleMap[auth()->user()->role] ?? 'Admin';
+
+        $division = Division::find($project->division_id);
+        $divisionName = $division ? $division->name : '-';
+
+        if ($project->assigned_user_id) {
+            $assignedUser = \App\Models\User::find($project->assigned_user_id);
+            $assignedName = $assignedUser ? $assignedUser->name : 'user';
+            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada {$assignedName} dari divisi {$divisionName}";
+        } else {
+            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada divisi {$divisionName}";
+        }
+
         ProjectHistory::create([
             'actor_id' => auth()->id(),
             'project_id' => $project->id,
             'action' => 'Buat',
             'project_title' => $project->title,
-            'description' => 'Admin membuat project ' . $project->title,
+            'description' => $desc,
         ]);
 
         return redirect('/admin')->with('success', 'Project berhasil ditambahkan');
@@ -67,12 +85,30 @@ class ProjectController extends Controller
     {
         $project->update($request->all());
 
+        $roleMap = [
+            'super_admin' => 'Super Admin',
+            'wakil_admin' => 'Wakil Admin',
+            'admin' => 'Admin'
+        ];
+        $roleName = $roleMap[auth()->user()->role] ?? 'Admin';
+
+        $division = Division::find($project->division_id);
+        $divisionName = $division ? $division->name : '-';
+
+        if ($project->assigned_user_id) {
+            $assignedUser = \App\Models\User::find($project->assigned_user_id);
+            $assignedName = $assignedUser ? $assignedUser->name : 'user';
+            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada {$assignedName} dari divisi {$divisionName}";
+        } else {
+            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada divisi {$divisionName}";
+        }
+
         ProjectHistory::create([
             'actor_id' => auth()->id(),
             'project_id' => $project->id,
             'action' => 'Edit',
             'project_title' => $project->title,
-            'description' => 'Admin mengubah data project ' . $project->title,
+            'description' => $desc,
         ]);
 
         return redirect('/admin')->with('success', 'Project berhasil diupdate');
@@ -83,12 +119,19 @@ class ProjectController extends Controller
         $title = $project->title;
         $project->delete();
 
+        $roleMap = [
+            'super_admin' => 'Super Admin',
+            'wakil_admin' => 'Wakil Admin',
+            'admin' => 'Admin'
+        ];
+        $roleName = $roleMap[auth()->user()->role] ?? 'Admin';
+
         ProjectHistory::create([
             'actor_id' => auth()->id(),
             'project_id' => null,
             'action' => 'Hapus',
             'project_title' => $title,
-            'description' => 'Admin menghapus project ' . $title,
+            'description' => "{$roleName} menghapus project {$title}",
         ]);
 
         return redirect('/admin')->with('success', 'Project berhasil dihapus');
