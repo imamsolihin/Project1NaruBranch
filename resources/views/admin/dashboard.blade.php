@@ -74,7 +74,19 @@
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Divisi</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Pembuat</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Dibuat</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        Dibuat
+                                        <div class="flex flex-col">
+                                            <a href="{{ route('admin.dashboard', ['sort' => 'asc']) }}" title="Terlama" class="{{ request('sort') == 'asc' ? 'text-blue-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300' }}">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+                                            </a>
+                                            <a href="{{ route('admin.dashboard', ['sort' => 'desc']) }}" title="Terbaru" class="{{ request('sort') != 'asc' ? 'text-blue-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300' }} -mt-1">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -129,7 +141,7 @@
                 <!-- Table Footer dengan Pagination -->
                 @if($projects->hasPages())
                 <div class="bg-gray-50/50 dark:bg-gray-800/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-                    {{ $projects->links() }}
+                    {{ $projects->withQueryString()->links() }}
                 </div>
                 @endif
             </div>

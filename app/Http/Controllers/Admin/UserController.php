@@ -29,7 +29,7 @@ class UserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', 'min:8'],
             'division_id' => ['nullable', 'exists:divisions,id'],
             'role' => ['required', 'in:user,wakil_admin,super_admin'],
         ]);
@@ -88,7 +88,7 @@ class UserController extends Controller
         }
 
         if ($request->filled('password')) {
-            $rules['password'] = ['confirmed', Rules\Password::defaults()];
+            $rules['password'] = ['confirmed', 'min:8'];
         }
 
         $request->validate($rules);
