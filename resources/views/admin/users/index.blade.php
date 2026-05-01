@@ -42,14 +42,25 @@
                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $user->name }}</td>
                             <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ $user->email }}</td>
                             <td class="px-6 py-4 text-gray-500 dark:text-gray-400">
-                                @if($user->role === 'admin')
-                                    <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">Admin</span>
+                                @if($user->role === 'super_admin')
+                                    <span class="px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full text-xs font-medium">Super Admin</span>
+                                @elseif($user->role === 'wakil_admin')
+                                    <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300 rounded-full text-xs font-medium">Wakil Admin</span>
+                                @elseif($user->role === 'admin')
+                                    <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300 rounded-full text-xs font-medium">Admin Lama</span>
                                 @else
-                                    <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs font-medium">User</span>
+                                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-full text-xs font-medium">User Biasa</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ $user->division->name ?? '-' }}</td>
                             <td class="px-6 py-4">
+                                @php
+                                    $canManage = true;
+                                    if (auth()->user()->role === 'wakil_admin' && in_array($user->role, ['super_admin', 'wakil_admin', 'admin'])) {
+                                        $canManage = false;
+                                    }
+                                @endphp
+                                @if($canManage)
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('admin.users.edit', $user->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">Edit</a>
                                     @if($user->id !== auth()->id())
@@ -60,6 +71,7 @@
                                     </form>
                                     @endif
                                 </div>
+                                @endif
                             </td>
                         </tr>
                         @empty

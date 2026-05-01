@@ -14,12 +14,12 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (!Auth::check() || Auth::user()->role !== $role) {
+        if (!Auth::check() || !in_array(Auth::user()->role, $roles)) {
             // Redirect based on role if logged in but unauthorized for this route
             if (Auth::check()) {
-                if (Auth::user()->role === 'admin') {
+                if (in_array(Auth::user()->role, ['super_admin', 'wakil_admin', 'admin'])) {
                     return redirect()->route('admin.dashboard');
                 }
                 return redirect()->route('dashboard'); // normal user dashboard

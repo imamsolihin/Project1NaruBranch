@@ -12,7 +12,8 @@ class Project extends Model
         'status',
         'division_id',
         'deadline',
-        'user_id'
+        'user_id',
+        'assigned_user_id'
     ];
 
     // relasi ke division
@@ -25,5 +26,11 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // relasi ke user (penerima tugas)
+    public function assignedUser()
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 }

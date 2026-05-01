@@ -68,6 +68,7 @@
                             <tr>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Judul Project</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Divisi</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Pembuat</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                 <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">Dibuat</th>
                             </tr>
@@ -76,20 +77,15 @@
                             @forelse ($projects as $project)
                                 <tr class="hover:bg-blue-50/30 dark:hover:bg-gray-700/50 transition-colors duration-200">
                                     <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold text-sm mr-3">
-                                                {{ substr($project->title, 0, 1) }}
-                                            </div>
-                                            <div>
-                                                <p class="font-medium text-gray-900 dark:text-white">{{ $project->title }}</p>
-                                                <p class="text-sm text-gray-500 dark:text-gray-400">ID: #{{ $project->id }}</p>
-                                            </div>
-                                        </div>
+                                        <p class="font-medium text-gray-900 dark:text-white">{{ $project->title }}</p>
                                     </td>
                                     <td class="px-6 py-4">
                                         <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
                                             {{ $project->division->name }}
                                         </span>
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                                        {{ $project->user->name ?? 'Admin/Sistem' }}
                                     </td>
                                     <td class="px-6 py-4">
                                         @if($project->status === 'pending')
@@ -108,7 +104,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="px-6 py-16">
+                                    <td colspan="5" class="px-6 py-16">
                                         <div class="text-center">
                                             <!-- Empty State Illustration -->
                                             <div class="mb-4">

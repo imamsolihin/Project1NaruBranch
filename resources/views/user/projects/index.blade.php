@@ -39,7 +39,12 @@
                         @forelse($projects as $project)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                             <td class="px-6 py-4">
-                                <p class="font-medium text-gray-900 dark:text-white">{{ $project->title }}</p>
+                                <p class="font-medium text-gray-900 dark:text-white">
+                                    {{ $project->title }}
+                                    @if($project->assigned_user_id === Auth::id())
+                                        <span class="ml-2 px-2 py-0.5 bg-indigo-100 text-indigo-800 text-[10px] uppercase font-bold rounded-full">Tugas Khusus</span>
+                                    @endif
+                                </p>
                                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ Str::limit($project->description, 60) ?: '-' }}</p>
                             </td>
                             <td class="px-6 py-4 text-sm {{ $project->deadline && \Carbon\Carbon::parse($project->deadline)->isPast() && $project->status !== 'done' ? 'text-red-500 font-bold' : 'text-gray-500 dark:text-gray-400' }}">
@@ -58,7 +63,7 @@
                             <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $project->user->name ?? 'Admin/Sistem' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">
-                                @if($project->user_id === Auth::id())
+                                @if($project->user_id === Auth::id() || $project->assigned_user_id === Auth::id() || ($project->division_id === Auth::user()->division_id && $project->assigned_user_id === null))
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('projects.edit', $project->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">Edit</a>
                                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Hapus project ini?');" class="inline">
