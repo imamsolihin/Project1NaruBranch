@@ -16,10 +16,10 @@ class Project extends Model
         'assigned_user_id'
     ];
 
-    // relasi ke division
-    public function division()
+    // relasi ke division (many-to-many)
+    public function divisions()
     {
-        return $this->belongsTo(Division::class);
+        return $this->belongsToMany(Division::class);
     }
 
     // relasi ke user (pembuat)
@@ -28,9 +28,9 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    // relasi ke user (penerima tugas)
-    public function assignedUser()
+    // relasi ke user (penerima tugas - many-to-many)
+    public function assignedUsers()
     {
-        return $this->belongsTo(User::class, 'assigned_user_id');
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
     }
 }

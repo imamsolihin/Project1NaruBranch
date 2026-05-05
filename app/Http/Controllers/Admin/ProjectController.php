@@ -12,7 +12,7 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Project::with(['division', 'user'])->latest();
+        $query = Project::with(['divisions', 'user', 'assignedUsers'])->latest();
 
         if ($request->filled('search')) {
             $search = strtolower($request->search);
@@ -37,13 +37,19 @@ class ProjectController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'division_id' => 'required',
+            'division_ids' => 'required|array',
+            'division_ids.*' => 'exists:divisions,id',
+            'assigned_user_ids' => 'nullable|array',
+            'assigned_user_ids.*' => 'exists:users,id',
             'deadline' => 'nullable|date'
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['division_ids', 'assigned_user_ids']);
         $data['user_id'] = auth()->id();
         $project = Project::create($data);
+
+        $project->divisions()->sync($request->division_ids);
+        $project->assignedUsers()->sync($request->assigned_user_ids ?? []);
 
         $roleMap = [
             'super_admin' => 'Super Admin',
@@ -52,15 +58,13 @@ class ProjectController extends Controller
         ];
         $roleName = $roleMap[auth()->user()->role] ?? 'Admin';
 
-        $division = Division::find($project->division_id);
-        $divisionName = $division ? $division->name : '-';
-
-        if ($project->assigned_user_id) {
-            $assignedUser = \App\Models\User::find($project->assigned_user_id);
-            $assignedName = $assignedUser ? $assignedUser->name : 'user';
-            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada {$assignedName} dari divisi {$divisionName}";
+        $divNames = Division::whereIn('id', $request->division_ids)->pluck('name')->join(', ');
+        
+        if (!empty($request->assigned_user_ids)) {
+            $userNames = \App\Models\User::whereIn('id', $request->assigned_user_ids)->pluck('name')->join(', ');
+            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada user ({$userNames}) dari divisi ({$divNames})";
         } else {
-            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada divisi {$divisionName}";
+            $desc = "{$roleName} membuat project {$project->title} yang ditujukan kepada divisi ({$divNames})";
         }
 
         ProjectHistory::create([
@@ -83,7 +87,21 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $project->update($request->all());
+        $request->validate([
+            'title' => 'required',
+            'description' => 'nullable',
+            'division_ids' => 'required|array',
+            'division_ids.*' => 'exists:divisions,id',
+            'assigned_user_ids' => 'nullable|array',
+            'assigned_user_ids.*' => 'exists:users,id',
+            'status' => 'required|in:pending,ongoing,done',
+            'deadline' => 'nullable|date'
+        ]);
+
+        $project->update($request->except(['division_ids', 'assigned_user_ids']));
+
+        $project->divisions()->sync($request->division_ids);
+        $project->assignedUsers()->sync($request->assigned_user_ids ?? []);
 
         $roleMap = [
             'super_admin' => 'Super Admin',
@@ -92,15 +110,13 @@ class ProjectController extends Controller
         ];
         $roleName = $roleMap[auth()->user()->role] ?? 'Admin';
 
-        $division = Division::find($project->division_id);
-        $divisionName = $division ? $division->name : '-';
-
-        if ($project->assigned_user_id) {
-            $assignedUser = \App\Models\User::find($project->assigned_user_id);
-            $assignedName = $assignedUser ? $assignedUser->name : 'user';
-            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada {$assignedName} dari divisi {$divisionName}";
+        $divNames = Division::whereIn('id', $request->division_ids)->pluck('name')->join(', ');
+        
+        if (!empty($request->assigned_user_ids)) {
+            $userNames = \App\Models\User::whereIn('id', $request->assigned_user_ids)->pluck('name')->join(', ');
+            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada user ({$userNames}) dari divisi ({$divNames})";
         } else {
-            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada divisi {$divisionName}";
+            $desc = "{$roleName} mengubah data project {$project->title} yang ditujukan kepada divisi ({$divNames})";
         }
 
         ProjectHistory::create([

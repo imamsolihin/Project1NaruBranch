@@ -16,7 +16,7 @@ class AdminController extends Controller
             $sort = 'desc';
         }
 
-        $projects = Project::with(['division', 'user'])->orderBy('created_at', $sort)->paginate(10);
+        $projects = Project::with(['divisions', 'user'])->orderBy('created_at', $sort)->paginate(10);
         $divisions = Division::all();
 
         return view('admin.dashboard', compact('projects', 'divisions', 'sort'));

@@ -25,25 +25,25 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tujuan Divisi</label>
-                        <select name="division_id" class="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500" required>
-                    <option value="">-- Pilih Divisi --</option>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tujuan Divisi (Bisa pilih lebih dari satu)</label>
+                        <select name="division_ids[]" multiple class="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 min-h-[100px]" required>
                     @foreach($divisions as $division)
                         <option value="{{ $division->id }}">
                             {{ $division->name }}
                         </option>
                     @endforeach
                         </select>
+                        <p class="text-xs text-gray-500 mt-1">Tahan tombol Ctrl (Windows) / Command (Mac) untuk memilih lebih dari satu.</p>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tujuan User (Opsional)</label>
-                        <select name="assigned_user_id" class="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
-                    <option value="">-- Untuk Semua Divisi --</option>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tujuan User (Opsional, Bisa pilih lebih dari satu)</label>
+                        <select name="assigned_user_ids[]" multiple class="w-full rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 min-h-[120px]">
                     @foreach($users as $u)
                         <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->division->name ?? 'Tanpa Divisi' }})</option>
                     @endforeach
                         </select>
+                        <p class="text-xs text-gray-500 mt-1">Tahan tombol Ctrl (Windows) / Command (Mac) untuk memilih lebih dari satu.</p>
                     </div>
 
                     <div>

@@ -96,7 +96,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
-                                            {{ $project->division->name }}
+                                            {{ $project->divisions->pluck('name')->join(', ') ?: 'Tanpa Divisi' }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">

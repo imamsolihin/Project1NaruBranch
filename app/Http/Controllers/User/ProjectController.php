@@ -13,17 +13,32 @@ class ProjectController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $projects = Project::with(['division', 'user'])
+        
+        // Project yang berkaitan dengan user (sebagai pembuat, penerima tugas, atau divisi tujuan)
+        $projects = Project::with(['divisions', 'user', 'assignedUsers'])
             ->where(function($q) use ($user) {
                 $q->where('user_id', $user->id)
-                  ->orWhere('assigned_user_id', $user->id)
-                  ->orWhere(function($subQ) use ($user) {
-                      $subQ->where('division_id', $user->division_id)
-                           ->whereNull('assigned_user_id');
+                  ->orWhereHas('assignedUsers', function($subQ) use ($user) {
+                      $subQ->where('users.id', $user->id);
+                  })
+                  ->orWhereHas('divisions', function($subQ) use ($user) {
+                      $subQ->where('divisions.id', $user->division_id);
                   });
             })
             ->latest()->paginate(10);
-        return view('user.projects.index', compact('projects'));
+
+        // Project dari divisi lain (tidak ditujukan untuk divisi user, dan tidak ditugaskan khusus ke user ini)
+        $allProjects = Project::with(['divisions', 'user'])
+            ->whereDoesntHave('divisions', function($q) use ($user) {
+                $q->where('divisions.id', $user->division_id);
+            })
+            ->whereDoesntHave('assignedUsers', function($q) use ($user) {
+                $q->where('users.id', $user->id);
+            })
+            ->where('user_id', '!=', $user->id)
+            ->latest()->paginate(10);
+
+        return view('user.projects.index', compact('projects', 'allProjects'));
     }
 
     public function create()
@@ -63,7 +78,7 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $user = Auth::user();
-        if ($project->user_id !== $user->id && $project->assigned_user_id !== $user->id && ($project->division_id !== $user->division_id || $project->assigned_user_id !== null)) {
+        if ($project->user_id !== $user->id && !$project->assignedUsers->contains($user->id) && !$project->divisions->contains('id', $user->division_id)) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -73,7 +88,7 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $user = Auth::user();
-        if ($project->user_id !== $user->id && $project->assigned_user_id !== $user->id && ($project->division_id !== $user->division_id || $project->assigned_user_id !== null)) {
+        if ($project->user_id !== $user->id && !$project->assignedUsers->contains($user->id) && !$project->divisions->contains('id', $user->division_id)) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -100,7 +115,7 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $user = Auth::user();
-        if ($project->user_id !== $user->id && $project->assigned_user_id !== $user->id && ($project->division_id !== $user->division_id || $project->assigned_user_id !== null)) {
+        if ($project->user_id !== $user->id && !$project->assignedUsers->contains($user->id) && !$project->divisions->contains('id', $user->division_id)) {
             abort(403, 'Unauthorized action.');
         }
 
