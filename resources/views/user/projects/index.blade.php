@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-black leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Selamat datang, {{ Auth::user()->name }}
             <span class="block text-sm text-gray-500 font-normal mt-1">Login sebagai: Divisi {{ Auth::user()->division->name ?? 'Belum Ada' }} - {{ Auth::user()->name }}</span>
         </h2>
