@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_histories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('actor_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('action');
-            $table->string('target_name');
-            $table->string('description')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('user_histories')) {
+            Schema::create('user_histories', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('actor_id')->nullable()->constrained('users')->nullOnDelete();
+                $table->string('action');
+                $table->string('target_name');
+                $table->string('description')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

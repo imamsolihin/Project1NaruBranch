@@ -48,7 +48,7 @@
                             <td class="px-6 py-4">
                                 <p class="font-medium text-gray-900 dark:text-white">
                                     {{ $project->title }}
-                                    @if($project->assigned_user_id === Auth::id())
+                                    @if($project->assignedUsers->contains('id', Auth::id()))
                                         <span class="ml-2 px-2 py-0.5 bg-indigo-100 text-indigo-800 text-[10px] uppercase font-bold rounded-full">Tugas Khusus</span>
                                     @endif
                                 </p>
@@ -66,11 +66,11 @@
                                     <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full text-sm font-medium">Done</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 font-medium">{{ $project->division->name ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 font-medium">{{ $project->divisions->pluck('name')->join(', ') ?: '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $project->user->name ?? 'Admin/Sistem' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">
-                                @if($project->user_id === Auth::id() || $project->assigned_user_id === Auth::id() || ($project->division_id === Auth::user()->division_id && $project->assigned_user_id === null))
+                                @if($project->user_id === Auth::id() || $project->assignedUsers->contains('id', Auth::id()) || ($project->divisions->contains('id', Auth::user()->division_id) && $project->assignedUsers->isEmpty()))
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('projects.edit', $project->id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium">Edit</a>
                                     <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Hapus project ini?');" class="inline">
@@ -129,7 +129,7 @@
                                     <span class="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full text-sm font-medium">Done</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 font-medium">{{ $project->division->name ?? '-' }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300 font-medium">{{ $project->divisions->pluck('name')->join(', ') ?: '-' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ $project->user->name ?? 'Admin/Sistem' }}</td>
                             <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $project->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">

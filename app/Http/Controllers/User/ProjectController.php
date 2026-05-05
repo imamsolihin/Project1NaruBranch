@@ -59,10 +59,13 @@ class ProjectController extends Controller
         $project = Project::create([
             'title' => $request->title,
             'description' => $request->description,
-            'division_id' => $user->division_id,
             'deadline' => $request->deadline,
             'user_id' => $user->id,
         ]);
+
+        if ($user->division_id) {
+            $project->divisions()->attach($user->division_id);
+        }
 
         ProjectHistory::create([
             'actor_id' => $user->id,
