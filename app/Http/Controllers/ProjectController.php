@@ -24,7 +24,7 @@ class ProjectController extends Controller
     {
         Project::create($request->all());
 
-        return redirect()->route('admin.dashboard')
+        return redirect()->route('admin.projects.index')
             ->with('success', 'Project berhasil ditambahkan');
     }
 
