@@ -75,7 +75,7 @@ class ProjectController extends Controller
             'description' => $desc,
         ]);
 
-        return redirect('/admin')->with('success', 'Project berhasil ditambahkan');
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil ditambahkan');
     }
 
     public function edit(Project $project)
@@ -127,7 +127,7 @@ class ProjectController extends Controller
             'description' => $desc,
         ]);
 
-        return redirect('/admin')->with('success', 'Project berhasil diupdate');
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil diupdate');
     }
 
     public function destroy(Project $project)
@@ -150,6 +150,6 @@ class ProjectController extends Controller
             'description' => "{$roleName} menghapus project {$title}",
         ]);
 
-        return redirect('/admin')->with('success', 'Project berhasil dihapus');
+        return redirect()->route('admin.projects.index')->with('success', 'Project berhasil dihapus');
     }
 }
