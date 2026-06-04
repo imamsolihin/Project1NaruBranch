@@ -8,14 +8,12 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * CATATAN: Perintah delete data telah dinonaktifkan karena berbahaya
+     * pada deployment ke database baru (menghapus seluruh data produksi).
      */
     public function up(): void
     {
-        // Hapus semua project
-        \Illuminate\Support\Facades\DB::table('projects')->delete();
-
-        // Hapus semua user kecuali admin
-        \Illuminate\Support\Facades\DB::table('users')->where('role', '!=', 'admin')->delete();
+        // Sengaja dikosongkan - jangan hapus file ini agar tidak dijalankan ulang
     }
 
     /**
