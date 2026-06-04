@@ -14,9 +14,7 @@ services:
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_URL
-        fromDatabase:
-          name: narubranch-db
-          property: connectionString
+        sync: false
       - key: PORT
         value: 10000
       - key: APP_URL
@@ -38,8 +36,3 @@ services:
       - key: MAIL_FROM_NAME
         value: NaruBranch
 
-databases:
-  - name: narubranch-db
-    databaseName: narubranch
-    user: narubranch_user
-    plan: free
